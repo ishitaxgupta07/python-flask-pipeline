@@ -1,72 +1,52 @@
+
 pipeline {
     agent any
 
-stage('Build') {
-    steps {
-        echo 'Creating virtual environment and installing dependencies...'
-        sh '''
-            python3 -m venv .venv
-            .venv/bin/python -m pip install --upgrade pip
-            .venv/bin/python -m pip install -r requirements.txt
-        '''
-    }
-}
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Installing Python dependencies...'
+                sh '''
+                    python3 -m venv .venv
+                    .venv/bin/python -m pip install --upgrade pip
+                    .venv/bin/python -m pip install -r requirements.txt
+                '''
+            }
+        }
 
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
-                sh 'python3 -m unittest discover -s .'
+                sh '.venv/bin/python -m unittest discover -s .'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying application to a mock deployment directory...'
+                echo 'Copying application files...'
                 sh '''
-                    mkdir -p "${WORKSPACE}/python-app-deploy"
-                    cp app.py requirements.txt "${WORKSPACE}/python-app-deploy/"
-                '''
-            }
-        }
-
-        stage('Run Application') {
-            steps {
-                echo 'Starting the Flask application...'
-                sh '''
-                    if [ -f "${WORKSPACE}/python-app-deploy/app.pid" ]; then
-                        old_pid=$(cat "${WORKSPACE}/python-app-deploy/app.pid")
-                        kill "$old_pid" 2>/dev/null || true
-                    fi
-
-                    nohup python3 "${WORKSPACE}/python-app-deploy/app.py" \
-                        > "${WORKSPACE}/python-app-deploy/app.log" 2>&1 &
-                    echo $! > "${WORKSPACE}/python-app-deploy/app.pid"
+                    mkdir -p python-app-deploy
+                    cp app.py requirements.txt python-app-deploy/
                 '''
             }
         }
 
         stage('Test Application') {
             steps {
-                echo 'Checking the deployed Flask application...'
+                echo 'Testing the Flask application...'
                 sh '''
-                    python3 - <<'PY'
-import time
-import urllib.request
+                    .venv/bin/python - <<'PY'
+from app import app
 
-url = "http://127.0.0.1:5000/"
-for attempt in range(15):
-    try:
-        with urllib.request.urlopen(url, timeout=2) as response:
-            body = response.read().decode("utf-8")
-            print("HTTP status:", response.status)
-            print("Response:", body)
-            assert response.status == 200
-            assert body == "Hello, Jenkins Multi-Stage Pipeline!"
-            break
-    except Exception:
-        if attempt == 14:
-            raise
-        time.sleep(1)
+client = app.test_client()
+response = client.get("/")
+
+print("HTTP status:", response.status_code)
+print("Response:", response.get_data(as_text=True))
+
+assert response.status_code == 200
+assert response.get_data(as_text=True) == "Hello, Jenkins Multi-Stage Pipeline!"
+print("Application test passed!")
 PY
                 '''
             }
@@ -78,7 +58,7 @@ PY
             echo 'Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline failed. Check the logs for details.'
+            echo 'Pipeline failed. Check the console output.'
         }
     }
 }
