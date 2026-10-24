@@ -1,17 +1,16 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Checking Python and installing dependencies...'
-                sh '''
-                    python3 --version
-                    python3 -m pip --version
-                    python3 -m pip install --user -r requirements.txt
-                '''
-            }
-        }
+stage('Build') {
+    steps {
+        echo 'Creating virtual environment and installing dependencies...'
+        sh '''
+            python3 -m venv .venv
+            .venv/bin/python -m pip install --upgrade pip
+            .venv/bin/python -m pip install -r requirements.txt
+        '''
+    }
+}
 
         stage('Test') {
             steps {
