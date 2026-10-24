@@ -1,8 +1,8 @@
-\# Python Flask Multi-Stage CI/CD Pipeline Using Jenkins
+﻿# Python Flask Multi-Stage CI/CD Pipeline Using Jenkins
 
 
 
-\## Project Overview
+## Project Overview
 
 
 
@@ -10,23 +10,23 @@ This project demonstrates a multi-stage CI/CD pipeline using Jenkins to build, t
 
 
 
-\## Technologies Used
+## Technologies Used
 
 
 
-\- \*\*Python\*\* – Application development
+\- \*\*Python\*\* â€“ Application development
 
-\- \*\*Flask\*\* – Web application framework
+\- \*\*Flask\*\* â€“ Web application framework
 
-\- \*\*Jenkins\*\* – CI/CD automation
+\- \*\*Jenkins\*\* â€“ CI/CD automation
 
-\- \*\*Git and GitHub\*\* – Source code management
+\- \*\*Git and GitHub\*\* â€“ Source code management
 
-\- \*\*unittest\*\* – Unit testing
+\- \*\*unittest\*\* â€“ Unit testing
 
 
 
-\## Project Structure
+## Project Structure
 
 
 
@@ -34,21 +34,21 @@ This project demonstrates a multi-stage CI/CD pipeline using Jenkins to build, t
 
 python-flask-pipeline/
 
-├── app.py
+â”œâ”€â”€ app.py
 
-├── test\_app.py
+â”œâ”€â”€ test\_app.py
 
-├── requirements.txt
+â”œâ”€â”€ requirements.txt
 
-├── Jenkinsfile
+â”œâ”€â”€ Jenkinsfile
 
-└── README.md
+â””â”€â”€ README.md
 
 ```
 
 
 
-\## Application Details
+## Application Details
 
 
 
@@ -64,11 +64,11 @@ Hello, Jenkins Multi-Stage Pipeline!
 
 
 
-\## Jenkins Pipeline Stages
+## Jenkins Pipeline Stages
 
 
 
-\### 1. Build
+### 1. Build
 
 
 
@@ -80,7 +80,7 @@ Hello, Jenkins Multi-Stage Pipeline!
 
 
 
-\### 2. Test
+### 2. Test
 
 
 
@@ -90,7 +90,7 @@ Hello, Jenkins Multi-Stage Pipeline!
 
 
 
-\### 3. Deploy
+### 3. Deploy
 
 
 
@@ -100,7 +100,7 @@ Hello, Jenkins Multi-Stage Pipeline!
 
 
 
-\### 4. Test Application
+### 4. Test Application
 
 
 
@@ -112,7 +112,7 @@ Hello, Jenkins Multi-Stage Pipeline!
 
 
 
-\## Configuration
+## Configuration
 
 
 
@@ -128,7 +128,7 @@ The Jenkins job uses \*\*Pipeline script from SCM\*\* to retrieve the pipeline d
 
 
 
-\## Execution Results
+## Execution Results
 
 
 
@@ -162,7 +162,7 @@ Application test passed!
 
 
 
-\## How to Run
+## How to Run
 
 
 
@@ -178,7 +178,7 @@ Application test passed!
 
 
 
-\## Note
+## Note
 
 
 
@@ -186,7 +186,7 @@ The deployment stage currently performs a mock deployment by copying files into 
 
 
 
-\## Learning Outcomes
+## Learning Outcomes
 
 
 
@@ -199,6 +199,7 @@ The deployment stage currently performs a mock deployment by copying files into 
 \- Organizing multi-stage CI/CD workflows.
 
 \- Validating application behavior within a pipeline.
+
 
 
 
